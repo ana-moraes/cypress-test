@@ -69,7 +69,7 @@ class HomePage extends BasePage {
     cy.get(selectors.save_button).focus()
 
     // Saves new value
-    cy.get(selectors.save_button).click().wait(1000)
+    cy.get(selectors.save_button).click().wait(5000)
 
     // Asserts if the value was saved correctly in the table cell by comparing it to the "new_parameters.new_quantity" value
     cy.get(selectors.tbcell_quantity).should("have.text", new_parameters.new_quantity)
@@ -83,10 +83,10 @@ class HomePage extends BasePage {
        */     
       if (index === new_parameters.order_number - 1) {
         cy.wrap($element)
-          .wait(100)
-          .trigger("mouseover", { force: true })
-          // Asserts if the element in the chart was updated to the "new_parameters.new_quantity" value by checking its "aria-label" attribute.
-          .invoke("attr", "aria-label").should('contain', `Value: ${new_parameters.new_quantity}`)
+        .wait(200)
+        .trigger("mouseover", { force: true, wait:3000}) // Triggers a change in the element to make aria-label visible
+        .invoke("attr", "aria-label")
+        .should('contain', `Value: ${new_parameters.new_quantity}`) // Asserts if the element in the chart was updated to the "new_parameters.new_quantity" value by checking its "aria-label" attribute.
       }
     })
   }
